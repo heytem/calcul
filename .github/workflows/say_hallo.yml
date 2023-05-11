@@ -1,33 +1,13 @@
-name: say_hallo
-
-on:
-
-  push:
+name: say_hello
+on: [push]
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
 
-  say_hello:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Say Hallo
-
-        run: echo "Hello, world! "name: say_hallo
-
-on:
-
-  push:
-
-jobs:
-
-  say_hallo:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - name: Say Hallo
-
-        run: echo "Hello, world! "
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Say hello
+      run: echo "Hello, world!"
