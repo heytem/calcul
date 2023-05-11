@@ -1,0 +1,12 @@
+version: 2
+updates:
+  - package-ecosystem: "gomod"  # le module Go
+    directory: "/"              # la racine du depot "repertoire"
+    schedule:                   # planifier la verif
+      interval: "daily"         # verifie chaque jour la dependances GO
+                                  
+                                    #meme chose pour Docker
+  - package-ecosystem: "docker" # le module Docker
+    directory: "/"              # la racine du depot "repertoire"
+    schedule:                    # planifier la verif
+      interval: "daily"         # verifie chaque jour la dependances Docker
