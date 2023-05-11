@@ -1,12 +1,21 @@
-version: 2
-updates:
-  - package-ecosystem: "gomod"  # le module Go
-    directory: "/"              # la racine du depot "repertoire"
-    schedule:                   # planifier la verif
-      interval: "daily"         # verifie chaque jour la dependances GO
-                                  
-                                    #meme chose pour Docker
-  - package-ecosystem: "docker" # le module Docker
-    directory: "/"              # la racine du depot "repertoire"
-    schedule:                    # planifier la verif
-      interval: "daily"         # verifie chaque jour la dependances Docker
+name: Dependabot
+
+on:
+  schedule:
+    - cron: "0 0 * * *"  # Execute Dependabot chaque jours a Minuit (00h)
+  workflow_dispatch:
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Set up Dependabot
+      uses: dependabot/dependabot-core@v0.160.2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        directory: "calcul/super_calculator"  # la racine du répertoire à surveiller
+        package_manager: "gomod", "docker"  # juste l'indication qu'on utilise Go modules et Docker
