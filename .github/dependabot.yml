@@ -2,7 +2,7 @@ name: Dependabot
 
 on:
   schedule:
-    - cron: "0 0 * * *"  # Execute Dependabot chaque jours a Minuit (00h)
+    - cron: "0 0 * * *"  # dans cette ligne ,on Execute Dependabot chaque jours a Minuit (00h)
   workflow_dispatch:
 
 jobs:
