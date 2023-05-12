@@ -8,7 +8,7 @@ on:
 jobs:
   unit-tests:
     name: Run Unit Tests
-    runs-on: ubuntu-latest  # Modify based on your preferred operating system
+    runs-on: ubuntu-latest  
 
     steps:
     - name: Checkout code
@@ -17,7 +17,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.17  # Modify with the desired Go version
+        go-version: 1.17  
 
     - name: Run Unit Tests - Go 1.17
       run: go test ./...
@@ -25,7 +25,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.18  # Modify with the desired Go version
+        go-version: 1.18  
 
     - name: Run Unit Tests - Go 1.18
       run: go test ./...
@@ -33,7 +33,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.19  # Modify with the desired Go version
+        go-version: 1.19  
 
     - name: Run Unit Tests - Go 1.19
       run: go test ./...
