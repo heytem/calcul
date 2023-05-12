@@ -1,0 +1,42 @@
+name: Release_Workflow
+
+on:
+  push:                     #le flux de travail sera déclenché lorsqu'une balise (tag) est poussée (push)                       
+    tags:                    #vers le référentiel 
+      - '*'                # ' * ' permet de prendre en compte toutes les balises
+
+jobs:               #declarer mes job
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go                       #pour installer goreleaser
+        uses: actions/setup-go@v4
+        with:
+          go-version: 'latest'
+          
+      - name: Install goreleaser          # installer go releaser 
+        run: |
+          curl -sL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | bash
+     
+     - name: Compile project and integrate with goreleaser          #compile le projet
+        run: |
+        goreleaser release --snapshot --rm-dist          #compiler le projet en utilisant goreeaser
+
+      - name: Set up Docker
+        uses: docker/setup-docker@v2
+        with:
+          docker-version: 'latest'   # jai choisi LATEST pour choisir la derniére version de docker ,je ne souhaite pas spécifier une version precise
+
+      - name: Build and push Docker image
+        env:
+        IMAGE_TAG: ${{ github.ref }}
+         DOCKER_USERNAME: heytem
+         DOCKER_PASSWORD: HeytemEcole2023
+        run: |
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+          docker build -t $DOCKER_USERNAME/calcul:$IMAGE_TAG .
+          docker push $DOCKER_USERNAME/calcul:$IMAGE_TAG
