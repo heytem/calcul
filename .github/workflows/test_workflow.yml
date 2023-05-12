@@ -6,29 +6,34 @@ on:
       - main
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        go-version: [1.17, 1.18, 1.19]
+  unit-tests:
+    name: Run Unit Tests
+    runs-on: ubuntu-latest  # Modify based on your preferred operating system
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: ${{ matrix.go-version }}
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17  # Modify with the desired Go version
 
-      - name: Restore dependencies cache
-        uses: actions/cache@v2
-        with:
-          path: ~/go/pkg/mod
-          key: go-${{ matrix.go-version }}-deps-${{ hashFiles('go.mod') }}
+    - name: Run Unit Tests - Go 1.17
+      run: go test ./...
 
-      - name: Install dependencies
-        run: go mod download
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.18  # Modify with the desired Go version
 
-      - name: Run tests
-        run: go test ./...
+    - name: Run Unit Tests - Go 1.18
+      run: go test ./...
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.19  # Modify with the desired Go version
+
+    - name: Run Unit Tests - Go 1.19
+      run: go test ./...
