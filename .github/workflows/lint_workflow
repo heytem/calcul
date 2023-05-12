@@ -1,0 +1,24 @@
+name: lint_workflow
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Static analysis with semgrep
+        run: semgrep --config=p/r2c-ci main.go      #demarrer le smegrep
+
+      - name: Dockerfile analysis with hadolint
+        run: hadolint Dockerfile
+
+      - name: Run super-linter on pull requests
+        if: github.event_name == 'pull_request'
+        run: ./super-linter             #demarrer notre super linter
