@@ -34,8 +34,8 @@ jobs:               #declarer mes job
       - name: Build and push Docker image
         env:
         IMAGE_TAG: ${{ github.ref }}
-         DOCKER_USERNAME: heytem
-         DOCKER_PASSWORD: HeytemEcole2023
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           docker build -t $DOCKER_USERNAME/calcul:$IMAGE_TAG .
