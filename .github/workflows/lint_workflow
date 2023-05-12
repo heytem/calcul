@@ -1,8 +1,10 @@
 name: lint_workflow
 
 on:
-  pull_request:
   push:
+    branches:
+      - '*'
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -12,6 +14,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.x # Replace with desired Go version
+
+      - name: Set up hadolint
+        run: |
+          wget -O hadolint https://github.com/hadolint/hadolint/releases/latest/download/hadolint-Linux-x86_64
+          chmod +x hadolint
+          sudo mv hadolint /usr/local/bin/
 
       - name: Static analysis with semgrep
         run: semgrep --config=p/r2c-ci main.go      #demarrer le smegrep
